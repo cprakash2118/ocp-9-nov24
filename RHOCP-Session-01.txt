@@ -1,0 +1,269 @@
+####Point-01#
+-Product Name - Red Hat OpenShift.
+
+Reference links:-
+https://www.redhat.com/en/technologies/cloud-computing/openshift
+https://docs.redhat.com/en/documentation/openshift_container_platform/4.14
+
+1. Cloud services editions - Fully managed in the public cloud of your choice
+  - "Red Hat OpenShift" Service on AWS   - AWS & RedHat
+  - Microsoft Azure "Red Hat OpenShift"  - Microsoft Azure & RedHat  
+  - "Red Hat OpenShift" Dedicated        - AWS or GCP with Red Hat 
+  - "Red Hat OpenShift" on IBM Cloud     - IBM & RedHat 
+  Note: Red Hat openshift installation using IPI method [Installer Provisioned Infrastructure]
+
+2. Self-managed editions - Granular control on your own infrastructure
+  - "Red Hat OpenShift" Kubernetes Engine
+  - "Red Hat OpenShift" Container Platform  [Main Product]
+  
+  - "Red Hat OpenShift" Platform Plus       [Add on service]
+  Note: Red Hat openshift installation using UPI method [User Provisioned Infrastructure]
+ 
+3.  Services & add-ons
+  - Red Hat OpenShift AI  [AI267]
+  - Red Hat OpenShift Virtualization  [DO316]
+  - Red Hat Quay  [DO480]
+  - Red Hat Advanced Cluster Management for Kubernetes [DO480]
+  - Red Hat Advanced Cluster Security for Kubernetes   [DO480]
+  - Red Hat 3scale API Management  [DO240]
+  - Red Hat OpenShift Consulting 
+  
+
+FYI- Red Hat OpenShift" Kubernetes Engine as per our LAB.
+
+#Kubernetes Vs OpenShift
+FYI- COntainer Orchetration.
+
+Kubernetes Vs "Production Kubernetes" [ SLO & SLA ]
+https://reprints2.forrester.com/#/assets/2/431/RES178526/report 
+
+
+- What is Containerization?
+
+
+Case-01 - w.r.t Physical Machine:-
+
+app01 (Java based, version=7.3)     -> Physical machine (PM-01)- RHEL8
+app02 (PHP based, version=14.16)    -> Physical machine (PM-01)- RHEL8
+app03 (Python based, version=3.2)   -> Physical machine (PM-01)- RHEL8
+
+After sometime (new feature added - acc to this PHP need to be upgraded]
+BaseTeam-Unix-DevOps/SRE applied patch on PM-01(RHEL8.3).
+
+While upgrading PHP to new version, custom shared libs also upgraded.
+
+Solution- Deploy application seperatly 
+app01 (Java based, version=7.3)     -> Physical machine (PM-01)- RHEL8
+app02 (PHP based, version=14.16)    -> Physical machine (PM-02)- RHEL8
+app03 (Python based, version=3.2)   -> Physical machine (PM-03)- RHEL8
+
+
+
+Case-02 - w.r.t Virtualization
+PM-01 -> VM1 , VM2, VM3 
+Solution- Deploy application seperatly 
+app01 (Java based, version=7.3)     -> Physical machine (VM-01)- RHEL8
+app02 (PHP based, version=14.16)    -> Physical machine (VM-02)- RHEL8
+app03 (Python based, version=3.2)   -> Physical machine (VM-03)- RHEL8
+
+FYI- Physical Machine [ Enterprise Ready hardware - IBM/Dell/HP/Cisco blade server ]
+
+Case-03 - w.r.t Containerization
+PM/VM/CLoud Instance - Create Container and deploy application.
+
+What is Physical Machine ?
+PM ->Install RHEL8 -> Middleware (jboss/WS/WL etc] -> Applications deploy  
+
+What is Virtual Machine ?
+PM -> Install hypervisor [RHV/KVM/ESXi] -> VM1/VM2/Vm3 ->  Install RHEL8 -> Middleware (jboss/WS/WL etc] -> Applications deploy
+
+What is Container ?
+FYI- w.r.t light weight applications use COntainer.
+Container-01  [libs/bin/tools/compiler/interpreter/etc as image]
+Application directly directly on container.
+
+
+- Containerization?
+1. manage container via container engine [docker/podman,crio,conatinerd,rocket etc]
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+https://kubernetes.io/docs/setup/production-environment/container-runtimes/
+https://github.com/cprakash2118/kubernetes-projects
+
+
+2. Manage conatiners via container Orchetration [Kubernetes-k8s]
+   Container Orchetration tool is k8s(kubernetes)
+   Container Orchetration platfrom - Red Hat OpenShift (Internally used certified k8s].
+   
+   
+
+
+- "Red Hat OpenShift" Kubernetes Engine
+  - "Red Hat OpenShift" Container Platform  [Main Product]
+  
+  - "Red Hat OpenShift" Platform Plus       [Add on service]
+  
+
+Kubernetes:-
+Layer-06 - End user application [Banking etc]
+Layer-05 - Add on k8s services [dns/metalLB etc]
+Layer-04 - INstall Kubernetes [k8s]
+Layer-03 - Container Runtime Environment [crio/conatinerd/Docker etc]
+Layer-02 - Server installation [RHEL/SUSE Linux/AWS Linux etc]
+layer-01 - PM/VM/Cloud 
+
+
+OpenShift:-
+Layer-08 - End user application [Banking etc]
+Layer-07 - "Red Hat OpenShift" Platform Plus 
+Layer-06 - "Red Hat OpenShift" Container Platform
+Layer-05 - Red Hat OpenShift Kubernetes Engine
+Layer-04 - INstall Kubernetes [k8s]
+Layer-03 - Container Runtime Environment [crio]
+Layer-02 - RHEL coreOS [INstallation via OpenShift installer]
+Layer-01 - PM/VM/Cloud(Public/Private)
+
+
+#####################
+Point-02#
+ROL - Red Hat Online Learning - https://rol.redhat.com 
+- click on "Join" w.r.t Do280.
+- click on "Resources" - Download pdf (en).
+
+- Click on "LAB" - Open workstation.
+  Click on workstation's console "Open Console" 
+
+- Login to OCP cluster 
+  username - admin 
+  password - redhatocp 
+  API URL  - https://api.clusterName.baseDomain:6443
+           - Example - https://api.ocp4.example.com:6443
+		   
+		   
+        Base Domain   - citi.com 
+		
+		Cluster Name  - apac-c1 - API - https://api.apac-c1.citi.com:6443 
+        Cluster Name  - apac-c2 - API - https://api.apac-c2.citi.com:6443 
+		Cluster Name  - na-c1   - API - https://api.na-c1.citi.com:6443 
+		
+Lab-01:-
+- How to login to the OCP cluster ?
+  User Name ?
+  Password ?
+  API URL ?
+  https://api.ClusterName.BaseDomain:6443
+  As per Lab 
+  ClusterName - ocp4 
+  baseDomain  - example.com 
+		
+  $ oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+  $ oc whoami 
+  $ oc whoami --show-console 
+  $ oc get nodes 
+  $ oc version 
+  $ oc get clusterversion 
+  
+- What is OpenShift CLuster?
+or 
+- What is OpenShift kubernetes cluster ?
+Collection of master & worker node.
+
+- master/control plain node [All openshift/kubernetes service running on master node]
+- worker/compute node [End user application running on worker node]
+
+Eg:
+OpenShift Cluster [Banking application]
+As per Production:-
+
+master nodes:-
+master01.ocp4.example.com
+master02.ocp4.example.com
+master03.ocp4.example.com
+
+worker01.ocp4.example.com 
+worker02.ocp4.example.com 
+worker03.ocp4.example.com
+worker04.ocp4.example.com 
+worker05.ocp4.example.com
+  
+  
+
+oc --help |less
+
+$ oc run --name appName --image image-name 
+$ oc get pods 
+or
+$ oc get all
+- It will create single resource (only pod).
+
+$ oc new-app --name appname httpd:2.4 
+$ oc get pods 
+$ oc get svc 
+$ oc get replicaset
+$ oc get deployment  
+
+
+$ vim pod.yaml 
+apiVersion: v1
+kind: Pod 
+metadata:
+   name: podname 
+   lables:
+      app: myapp 
+spec: 
+
+########################
+# Quick Recap-
+- Product - RHOCP [Red Hat OpenShift] 
+- ROL - Red Hat Online Learning. 
+  - acccess labs [via workstation]
+  - eBook 
+- Orientation to the Classroom Environment
+  1) Users details 
+    - w.r.t VMs [Why required ? - To access the VMs/servers]
+     student/student [student having sudo access]
+	 root/redhat 
+
+    - w.r.t OCP cluster (OCP - OpenShift Cluster Platform).
+	  admin/redhatocp [cluster-admin - w.r.t OCP is like root account]
+	  developer/developer [member account w.r.t OCP]
+	  FYI - Both above account are LDAP account.
+	  
+	  kubeadmin account [This is default account w.r.t OCP cluster, automatically created at the time of OCP installation]
+	  
+	  username=kubeadmin
+	  password= FOllow the below steps.
+	  From workstation as student user, now login to utility node as root.
+      $ whoami ; hostname -f 
+       student 
+       workstation.lab.example.com 
+      $ ssh root@utility 
+      # whoami ; hostname -f 
+       root 
+       utility.lab.example.com 
+      # cd /home/lab/ocp4/auth 
+      # cat kubeadmin-password 
+      FYI- Get kubeadmin password 
+      # cat kubeconfig | grep server 
+      FYI - Get API URL - https://api.ocp4.example.com 
+	  
+	  # exit 
+	  $ whoami ; hostname -f 
+	   student 
+       workstation.lab.example.com 
+      $ oc whoami --show-console 
+	  FYI- Login via WB to OCP cluster.
+	  
+Lab Task - Login as CLI and Web console with admin/developer/kubeadmin user  	  
+	  
+	  
+
+
+
+
+
+
+  
+
+
+
+
