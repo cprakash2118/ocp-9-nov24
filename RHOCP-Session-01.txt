@@ -253,17 +253,51 @@ spec:
       $ oc whoami --show-console 
 	  FYI- Login via WB to OCP cluster.
 	  
-Lab Task - Login as CLI and Web console with admin/developer/kubeadmin user  	  
+     Lab Task - Login as CLI and Web console with admin/developer/kubeadmin user.  	  
 	  
 	  
-
-
-
-
-
-
-  
-
-
-
-
+	  Base Domain - example.com [citi.com, dell.com,cisco.com, redhat.com - rol.redhat.com]
+	  CLusterName - ocp4 
+	  
+	  API URL - https://api.ClusterName.BaseDomain:6443
+	  API URL - https://api.ocp4.example.com:6443 
+	  
+	  Web COnsole - https://appName-nameSpaceName.apps.ClusterName.BaseDomain
+	  Web Console - https://console-openshift-console.apps.ocp4.example.com 
+	  
+	  
+   2. Domain/Network.
+   student network - lab.example.com  - 172.25.250.0/24 
+   cluster network - ocp4.example.com - 192.168.50.0/24 
+   
+   
+   3. VMs 
+     workstation.lab.example.com 
+	 utility.lab.example.com [with this server - OCP cluster will not work]
+	 FYI - HAproxy, DNS, DHCP, PXE, Apache-httpd, etc 
+	 bastion.lab.example.com 
+	 
+	 master01.opc4.example.com 
+	 idm.ocp4.example.com 
+	 git.ocp4.example.com 
+	 registry.ocp4.example.com 
+	 
+	 classroom.example.com [via bastion node - it connect to internet]
+	 
+	 
+	 hostname -s 
+	 hostname -d
+	 hostname -f 
+	 cat /etc/redhat-<tab>
+	 uname -r 
+	 
+	 oc get nodes 
+	 oc get clusterversion 
+	 oc version 
+	 oc debug node/master01 
+	 - It take you to master01 
+	 choor /host
+	 
+	 
+	 
+	 
