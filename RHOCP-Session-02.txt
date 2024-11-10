@@ -1,0 +1,39 @@
+#Quick Recap:-
+- Product - Red Hat OpenShift 
+- ROL 
+- Classroom Environment.
+  1.Users 
+    - student/student; root/redhat - VMs login 
+    - admin/redhatocp ; developer/developer - OCP cluster login 	
+	- kubeadmin/passowrd-file 
+	  $ ssh root@utility 
+      # cd /home/lab/ocp4/auth ; scp -r kube* student@workstation:/home/student 
+      # cat kubeadmin | grep server 
+      # cat kubeadmin-passwd 
+    - oc login -u userName -p Password API-URL
+     $oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+     Note: UserName, Password and API-URL required to login to OCP cluster using Oauth Service.
+
+   2. Network/Domain 
+    - lab.example.com  - 172.25.250.0/24 
+	- ocp4.example.com - 192.168.50.0/24 
+	- example.com      - 172.25.252.0/24 
+	
+	As per OCP - baseDomain - example.com ; clusterName - ocp4 
+	As per DNS - domain in example.com, lab.example.com & ocp4.example.com
+	
+   3. VMs details 
+      - workstation.lab.example.com  [ jump server - Linux/Window ]
+	    FYI- Login to OCP cluster.
+	  
+	  - utility.lab.example.com [HAproxy, DNS, DHCP, PXE for OCP, Apache-httpd, etc ]
+	    FYI- Having 2 NIC - eth0-172.25.250.0/24 ; eth1-192.168.50.0/24; eth1 connect to CLuster Network.
+	  - registry.ocp4.example.com 
+	  - idm.ocp4.example.com 
+	  - master01.ocp4.example.com 
+	  
+      - bastion.lab.example.com [ it connect Student Network to Classroom Network - then connect to internet]
+        FYI- Why internal required - quay.io; github.com; registry.redhat.io 
+      - classroom.example.com  [This connect to internet]
+     
+	
