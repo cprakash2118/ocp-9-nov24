@@ -153,7 +153,9 @@ $ oc get pods; svc; dc, bc
 Note: Identity provider is "htpasswd"
 Other IDP are [ LDAP, Keystone, GitEnterprise, OpenID Connect-OIDC]
 
-Step-1 -  $ sudo yum install httpd-tools -y 
+Step-1 - Create user/password file via htpasswd.
+ 
+          $ sudo yum install httpd-tools -y 
           $ htpasswd -c -B -b sre-file-name user1 redhat123 
 		  $ htpasswd -B -b sre-file-name user2 redhat123 
 		  $ htpasswd -B -b sre-file-name user3 redhat123
@@ -162,7 +164,24 @@ Step-1 -  $ sudo yum install httpd-tools -y
 		  $ cat sre-file-name
 		  
 		  
-Step-2 - $ oc create secret generic sre-secret --from-file htpasswd=sre-file-name -n openshift-config 
+Step-2 - Create genric secret (via --from-file with tag "htpasswd"), w.r.t namespace="openshift-config".
+         $ oc create secret generic sre-secret --from-file htpasswd=sre-file-name -n openshift-config 
          $ oc get secret sre-secret -n openshift-config
 		 $ oc get secret sre-secret -n openshift-config -o json/yaml 
 		 $ echo "Encrypted data" | base64 -d 
+		 
+Step-3 - Update to Oauth service.
+        $ oc get oauth/cluster 
+		or 
+		$ oc get oauth cluster 
+		
+		$ oc get oauth/cluster -o yaml
+		$ oc get oauth/cluster -o yaml > oauth.yaml 
+		Now updating oauth.yaml file and update to OCP cluster.
+		
+		https://docs.redhat.com/en/documentation/openshift_container_platform/4.14
+		https://docs.redhat.com/en/documentation/openshift_container_platform/4.14/html/authentication_and_authorization/index
+		
+		https://docs.redhat.com/en/documentation/openshift_container_platform/4.14/html/authentication_and_authorization/configuring-identity-providers#identity-provider-htpasswd-CR_configuring-htpasswd-identity-provider
+		
+		
