@@ -1,0 +1,78 @@
+    1  sudo reboot
+    2  podman pull quay.io/cprakash2118/april-java-unzip-httpd-image-02
+    3  podman  images
+    4  podman ps 
+    5  podman run -d --name server-01 -p 8080:80 c17c0c02f0bf
+    6  podman  ps
+    7  podman run -d --name server-02 -p 8081:80 c17c0c02f0bf
+    8  for x in {2..9}; do podman run -d --name server-0${x} -p 808${x}:80 c17c0c02f0bf; done
+    9  podman  ps
+   10  exit
+   11  sudo su - 
+   12  podman build --help | grep layer
+   13  mkdir work 
+   14  cd work/
+   15  pwd
+   16  ll
+   17  podman images
+   18* podman p
+   19  podman  rmi -af
+   20  podman ps
+   21  podman images
+   22  vim Containerfile
+   23  podman images
+   24  podman build --layer=false -t my-image-name .
+   25  podman build --help | grep layer
+   26  podman build --layers=false -t my-image-name .
+   27  podman images
+   28  podman tag localhost/my-image-name quay.io/cprakash2118/ocp-9-nov24-image:testv1
+   29  podman images
+   30  podman quay.io
+   31  podman login quay.io
+   32  podman  push quay.io/cprakash2118/ocp-9-nov24-image:testv1
+   33  oc new-project demo01 
+   34  oc project -q 
+   35  oc get all
+   36  oc new-app --name test01 quay.io/cprakash2118/ocp-9-nov24-image:testv1
+   37  oc get pods
+   38  watch oc get pods
+   39  oc get pods
+   40  oc logs test01-6745b55df8-mvz78
+   41  oc create serviceaccount app-sa 
+   42  oc adm policy add-scc-to-user anyuid -z app-sa 
+   43  oc  get pods
+   44  oc set serviceaccount deployment test01 app-sa 
+   45  oc  get pods
+   46  oc get pods 
+   47  oc get svc 
+   48  oc get deployment 
+   49  oc expose service test01 
+   50  oc get route 
+   51  curl http://test01-demo01.apps.ocp4.example.com
+   52  oc new-project demo02 
+   53  oc new-app --as-deployment-config httpd:2.4~https://github.com/cprakash2118/web
+   54  oc get pods
+   55  oc logs -f bc/web
+   56  oc get pods
+   57  oc expose service web 
+   58  oc get pods 
+   59  oc scale --replicas=10 dc/web 
+   60  oc get pods 
+   61  oc get pods
+   62  oc get pods | grep build 
+   63  oc start-build web 
+   64  oc get pods | grep build 
+   65  oc logs -f bc/web
+   66  oc get pods | grep build 
+   67  oc start-build --help |less
+   68  oc start-build --from-build=web-2 
+   69  oc logs -f bc/web
+   70  oc start-build --from-build=web-1
+   71  oc logs -f bc/web
+   72  oc get pods | grep build 
+   73  oc get pods | grep dep
+   74  oc get bc
+   75  ll
+   76  git clone https://github.com/cprakash2118/ocp-9-nov24
+   77  cp -rpv Containerfile ocp-9-nov24/
+   78  history  > ocp-9-nov24/history.txt 
