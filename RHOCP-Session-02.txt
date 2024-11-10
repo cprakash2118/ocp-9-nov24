@@ -185,3 +185,20 @@ Step-3 - Update to Oauth service.
 		https://docs.redhat.com/en/documentation/openshift_container_platform/4.14/html/authentication_and_authorization/configuring-identity-providers#identity-provider-htpasswd-CR_configuring-htpasswd-identity-provider
 		
 		
+	   $ vim oauth.yaml
+       ****************
+        Already some contents.
+       ****************	   
+	   - name: sre-team
+         mappingMethod: claim
+         type: HTPasswd
+         htpasswd:
+           fileData:
+              name: sre-secret 
+	
+	   $ oc apply -f oauth.yaml 
+	   $ oc get pods -n openshift-authentication  
+	   $ watch oc get pods -n openshift-authentication
+       
+       $ oc get user (oc get po)
+       $ oc get groups 	   
