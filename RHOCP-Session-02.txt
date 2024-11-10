@@ -162,15 +162,7 @@ Step-1 -  $ sudo yum install httpd-tools -y
 		  $ cat sre-file-name
 		  
 		  
-		  
-		  
-		  
-		  
-	
-
-	
-
-
-
-
-  
+Step-2 - $ oc create secret generic sre-secret --from-file htpasswd=sre-file-name -n openshift-config 
+         $ oc get secret sre-secret -n openshift-config
+		 $ oc get secret sre-secret -n openshift-config -o json/yaml 
+		 $ echo "Encrypted data" | base64 -d 
