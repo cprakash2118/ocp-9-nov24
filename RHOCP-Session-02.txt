@@ -127,3 +127,50 @@ vim Containerfile
 - oc project -q
 - oc new-app --name test2 httpd:2.4~https://gihub.com/cprakash2118/web 
 $ oc get pods; svc; dc, bc 	
+
+###
+- login to OCP cluster 
+- Login as admin/developer/kubeadmin
+  FYI- admin/kubeadmin are "cluster-admin" role; developer member.
+- Basic operations w.r.t OCP.
+- Application Deployment 
+  1. Via image 
+  2. via Image + source code (git)
+
+- Kubernetes/OpenShift resources- 
+
+
+#####################
+1-) Login to OCP cluster using kubeadmin/password [kubeadmin account is "cluster-admin"]
+2-) Users Creations.
+    UserName   Password      FileName           SecretName    IdentityProviderName-(idp)    Group    
+	user1-5    redhat123   sre-file-name        sre-secret       sre-team                  sre_grp
+    user6-10   redhat678   devops-file-name    devops-secret     DevOps-team               devops_grp 
+    user11-20  redhat11    app-file-name       app-secret        app-team                  app_grp 
+	
+3-) ALL work done via API only - using webConsole/oc.
+
+Note: Identity provider is "htpasswd"
+Other IDP are [ LDAP, Keystone, GitEnterprise, OpenID Connect-OIDC]
+
+Step-1 -  $ sudo yum install httpd-tools -y 
+          $ htpasswd -c -B -b sre-file-name user1 redhat123 
+		  $ htpasswd -B -b sre-file-name user2 redhat123 
+		  $ htpasswd -B -b sre-file-name user3 redhat123
+		  $ htpasswd -B -b sre-file-name user4 redhat123
+		  $ htpasswd -B -b sre-file-name user2 redhat123
+		  $ cat sre-file-name
+		  
+		  
+		  
+		  
+		  
+		  
+	
+
+	
+
+
+
+
+  
