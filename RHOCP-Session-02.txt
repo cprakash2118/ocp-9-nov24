@@ -35,5 +35,95 @@
       - bastion.lab.example.com [ it connect Student Network to Classroom Network - then connect to internet]
         FYI- Why internal required - quay.io; github.com; registry.redhat.io 
       - classroom.example.com  [This connect to internet]
-     
+
+- Login to OCP cluster:-
+  - Login to OCP cluster via CLI.
+  $ oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+  $ oc login -u kubeadmin -p Password-From-kubeadmin-passwd-file https://api.ocp4.example.com:6443
+  
+  - Login to OCP cluster using Web Console.
+  $ oc whoami 
+  admin 
+  $ oc whoami --show-console 
+  https://console-openshift-console.apps.ocp4.example.com 
+  
+  You admin/developer/kubeadmin account.
+  
+  API URL     - https://api.ClusterName.BaseDomain:6443
+  Web Console - https://appName-NameSpace.apps.ClusterName.BaseDomain
+
+  Eg:
+  API URL for lab:-
+   ClusterName - ocp4 
+   BaseDomain  - example.com 
+  https://api.ocp4.example.com:6443 
+
+  Why 6443 port only ?
+  ssh root@utility 
+  lsof -i:6443 
+  vim /etc/haproxy/haproxy.conf 
+  
+  Login to HAproxy - https://utility.lab.example.com:32700
+               admin/RedH@999
+
+ Web Console for lab:-
+    appName     - console 
+	NameSpace   - openshift-console
+	ClusterName - ocp4 
+    BaseDomain  - example.com 
+  https://console-openshift-console.apps.ocp4.example.com
+  
+  
+   
 	
+- OCP Operations 
+
+
+$ oc whoami 
+Login-Account
+
+$ oc whoami -t 
+TOKEN
+
+$ oc whoami --show-console
+https://console-openshift-console.apps.ocp4.example.com
+
+$ oc version 
+$ oc get clusterversion 
+$ oc get nodes 
+$ oc debug node/master 
+#chroot /host 
+# hostname -f
+master0.ocp4.example.com 
+# cat /etc/redhat-r<tab>
+RHEL CoreOS 4.14
+
+Note: RHEL CoreOS version is Red Hat OpenShift version.
+
+
+
+#Applications deployment:-
+1. Build Image & Applications outside (As images) and deploy on OCP cluster via POD. 
+
+- Build your custom image.
+vim Containerfile 
+ FROM ubi8/ubi:8.3
+ MAINTAINER Your Name  <_youremail_>
+ LABEL description="A custom Apache container based on UBI 8"
+ RUN yum install -y httpd && \
+    yum clean all
+ EXPOSE 80
+ RUN echo "Hello from Containerfile" > /var/www/html/index.html
+ CMD ["httpd", "-D", "FOREGROUND"]
+
+- podman images 
+- podman build --layer=false -t my-image-name .
+- oc new-app --name application01 image-name
+
+2. Build Image & Applications within OCP and deploy on OCP cluster via POD.
+    CI/CD example 
+	
+- oc new-project demo02
+- oc project -q
+- oc new-app --name test2 httpd:2.4~https://gihub.com/cprakash2118/web 
+$ oc get pods; svc; dc, bc 	
