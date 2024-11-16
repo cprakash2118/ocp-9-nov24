@@ -78,6 +78,14 @@ user6-10  - devops_grp
 Assign "cluster-admin" access to sre_grp group 
 
 
+Adding policies 
+$ oc adm policy add-cluster-role-to-group  cluster-admin sre_grp
+
+
+
+
+
+
 
   
    
