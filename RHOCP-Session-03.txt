@@ -63,9 +63,24 @@ Adding
  user6-user10  - redhat678
  devops-secret - secret 
  devops-team - idp 
+ groups - devops_grp 
  
  
+2) Adding groups:-
+  - oc get groups 
+  - oc adm group new group_name
+   $ oc adm group add-users sre_grp user1 user2 user3 user4 user5 
+   $ oc get groups
+
+user1-5   - sre_grp
+user6-10  - devops_grp 
+
+Assign "cluster-admin" access to sre_grp group 
+
+
+
   
+   
   
   
   
