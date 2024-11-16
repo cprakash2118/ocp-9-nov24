@@ -37,6 +37,12 @@ user11-20        -> app01_grp
    Now do your changes and apply  
  
 ************************** FYI End here *****************************
+user1-user5,user511 
+ sre-secret - secret 
+ sre-team - idp 
+
+- user4's password change from redhat123 to red
+- user51 delete
 
  $ cat oauth-v2.yaml  
  Note:-
