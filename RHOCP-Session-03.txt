@@ -1,0 +1,66 @@
+###Quick Recap-
+# Authentication to OCP cluster (Setup htpasswd as idp).
+- Login to OCP Cluster [admin/developer/kubeadmin]
+- Created/deleted/modify users (Using htpasswd IDP)
+- Create groups and Adding users to groups.
+
+# RBAC (Role Based Access COntrol).
+- rules, roles, bindings
+- binding w.r.t project/local & Cluster 
+
+
+##Task-01:-
+user1-5,user51   -> sre_grp 
+user6-10         -> devops_grp 
+user11-20        -> app01_grp 
+
+ 1) Subtask-01 
+    - delete  user51 
+	- update user4's password from redhat123 to red 
+
+ Solution#
+  - Login to OCP cluster as admin (cluster-admin).
+  $ oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+  $ oc whoami 
+  $ oc get nodes 
+  $ oc get users | grep sre 
+  $ oc get oauth/cluster -o yaml > oauth-v2.yaml
+
+************************** FYI Start here *****************************  
+  One changed done on oauth-v2.yaml 
+  $ oc apply -f oauth-v2.yaml 
+  Again doing chnages and apply 
+  $ oc apply -f oauth-v2.yaml 
+   Output - with error, kubernetes manage version controle so it will ask "apply changes to latest version".  
+
+  $ oc get oauth/cluster -o yaml > oauth-v2-anyname.yaml
+   Now do your changes and apply  
+ 
+************************** FYI End here *****************************
+
+ $ cat oauth-v2.yaml  
+ Note:-
+  - Get the idp associated with respective secret [sre-team
+
+ $ oc extract secret/sre-secret --to=. -n openshift-config 
+  Output - htpasswd file 
+ $ htpasswd -D htpasswd user51 
+ $ htpasswd -b -B htpasswd user4 red
+
+ $ oc set data secret/sre-secret --from-file htpasswd=htpasswd -n openshift-config 
+ $ oc get pod -n openshift-authetication 
+ Output - Pods/Oauth Application getting updated 
+ 
+ login to OCP cluster
+
+Adding
+ user6-user10  - redhat678
+ devops-secret - secret 
+ devops-team - idp 
+ 
+ 
+  
+  
+  
+  
+  
