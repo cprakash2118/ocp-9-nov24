@@ -82,14 +82,39 @@ Adding policies
 $ oc adm policy add-cluster-role-to-group  cluster-admin sre_grp
 
 
-
-
-
-
-
-  
+#########
+Certificate based authetication:-
+- Using kubeconfig file.
+1) $ oc get nodes --kubeconfig /kubeconfig/file/location
+   $ oc get nodes --kubeconfig /home/student/kubeconfig 
    
-  
-  
-  
-  
+   FYI-
+   $ hostname -f ; whoami ; pwd
+     workstation.lab.example.com 
+	 student
+	 /home/student 
+	 
+   $ ssh root@utility
+   # hostname -f ; whoami ; pwd
+   # cd /home/lab/ocp4/auth 
+   # ls 
+   kubeconfig kubeadmin-password
+   # scp -r kube* student@workstation:/home/student
+   Password: student 
+   # exit 
+   
+1st method using certificate:-
+   $ oc get nodes --kubeconfig /home/student/kubeconfig
+   
+2nd 
+ $ env | grep KUBECONFIG 
+ $ export KUBECONFIG=/kubeconfig/file/location
+ $ env | grep KUBECONFIG
+ $ oc get nodes 
+
+3rd 
+ $ cp -rpv kubeconfig ~/.kube/config 
+ $ oc get nodes 
+
+ 
+	 

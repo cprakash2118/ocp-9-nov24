@@ -1,0 +1,35 @@
+#Unit-03- Authentication and Authorization
+- Configure Identity Providers 
+- Define and Apply Permissions with RBAC
+
+#Unit-01- Declarative Resource Management
+- Resource Manifests 
+- Kustomize Overlays
+
+*****************
+1.1 Resource Manifests 
+Imperative Versus Declarative Workflows
+- Example:
+
+Imperative Workflows:-
+- Create namespace/project 
+  $ oc new-project project01 
+  $ oc project -q 
+  Outcome - project name.
+  $ oc get all 
+  Outcome - No resources found, avoid warning as of now.
+
+- Deploy application w.r.t OpenShift ?
+  - oc new-app --name app-name imageURL
+  $ oc new-app --name app01 httpd:2.4 
+  NOte:
+   - Pod created 
+   - service Created
+   - deploymnet Created
+   - This pod getting created using given image (httpd:2.4 - It's from RH OpenShift internal registry.
+    $ oc get is -n openshift |grep httpd 
+    $ oc get istag -n openshift | grep httpd 
+
+ 
+   
+    
