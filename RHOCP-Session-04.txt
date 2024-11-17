@@ -30,6 +30,154 @@ Imperative Workflows:-
     $ oc get is -n openshift |grep httpd 
     $ oc get istag -n openshift | grep httpd 
 
+Declarative Workflows:-
+- Resource Manifests?
+  When express kubernetes/OpenShift resources in yaml/json format, that file know as resources manifest.
+
+Example:
+
+# vim pod.yaml 
+apiVersion: v1    
+kind: Pod 
+metadata:
+  - name: pod-name 
+    namespace: demo02
+    labels:
+	  app: myapp 
+	  env: prod
+	  app-type: payment	  
+spec: 
+ containers:
+ - name: conatiner-name-01
+   image: image-url 
+   imagePullPolicy: IfNotPresent 
+   name: httpd 
+   ports:
+    - containerPort: 8080
+	  protocal: TCP 
+    - containerPort: 8443
+      protocal: TCP 
+	  
+
+
+*******************
+Best-players: {abc, xyz, 123}
+  - abc 
+  - xyz 
+  - 123 
+
+data: {name: abc, age: 24, match: 40}   
+  
+Best-players-description:
+  - name: abc 
+    age: 24
+    match: 40 	
+	{ name: abc, match: 40, age: 24 } 
+  - name: abc 
+    age: 24
+    match: 40 
+	
+  - name: abc 
+    age: 24
+    match: 40 
+	
+Best-players-description-02:
+ - { name: abc, match: 40, age: 24 }
+ - { name: abc, match: 40, age: 24 }
+ - { name: abc, match: 40, age: 24 }
+
+
+
+Data-01:
+ - { name: abc, match: 40, age: 24 }
+ - { name: abc, match: 40, age: 24 }
+ - john 
+ - mack
+ - { name: abc, match: 40, age: 24 }
  
-   
-    
+
+*******************
+
+	
+# vim pod.yaml 
+apiVersion: v1    
+kind: Pod 
+metadata:
+  - name: pod-name
+    labels:
+      app: myapp	
+spec: 
+ containers:
+ - name: conatiner-name-01
+   image: image-url 
+   imagePullPolicy: IfNotPresent 
+   name: httpd 
+   ports:
+    - containerPort: 8080
+	  protocal: TCP 
+    - containerPort: 8443
+      protocal: TCP 
+	 
+	 
+# vim replicaset.yaml 
+apiVersion: apps/v1 
+kind: ReplicaSet 
+metadata:
+  - name: replicaset-name 
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp 
+  template: 
+     metadata:
+     - name: pod-name
+       labels:
+       app: myapp	
+     spec: 
+       containers:
+       - name: conatiner-name-01
+         image: image-url 
+         imagePullPolicy: IfNotPresent 
+         name: httpd 
+         ports:
+          - containerPort: 8080
+       	  protocal: TCP 
+          - containerPort: 8443
+            protocal: TCP  
+			
+# vim deployment.yaml 
+apiVersion: apps/v1 
+kind: Deployment  
+metadata:
+  - name: replicaset-name 
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp 
+  template: 
+     metadata:
+     - name: pod-name
+       labels:
+       app: myapp	
+     spec: 
+       containers:
+       - name: conatiner-name-01
+         image: image-url 
+         imagePullPolicy: IfNotPresent 
+         name: httpd 
+         ports:
+          - containerPort: 8080
+       	  protocal: TCP 
+          - containerPort: 8443
+            protocal: TCP  
+
+
+ 
+####### Note:-
+To get the images .
+oc new-project dummy
+oc new-app --name test httpd:2.4 
+oc get deployment -o yaml | grep -i image 
+oc delete all -l app=dummy 
