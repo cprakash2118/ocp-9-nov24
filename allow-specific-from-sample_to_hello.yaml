@@ -1,0 +1,19 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-specific-sample-to-hello
+spec:
+  podSelector:
+    matchLabels:
+      deployment: test
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            network: different-namespace
+        podSelector:
+          matchLabels:
+            deployment: sample
+      ports:
+      - port: 8080
+        protocol: TCP

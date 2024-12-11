@@ -1,78 +1,613 @@
     1  sudo reboot
-    2  podman pull quay.io/cprakash2118/april-java-unzip-httpd-image-02
-    3  podman  images
-    4  podman ps 
-    5  podman run -d --name server-01 -p 8080:80 c17c0c02f0bf
-    6  podman  ps
-    7  podman run -d --name server-02 -p 8081:80 c17c0c02f0bf
-    8  for x in {2..9}; do podman run -d --name server-0${x} -p 808${x}:80 c17c0c02f0bf; done
-    9  podman  ps
-   10  exit
-   11  sudo su - 
-   12  podman build --help | grep layer
-   13  mkdir work 
-   14  cd work/
-   15  pwd
-   16  ll
-   17  podman images
-   18* podman p
-   19  podman  rmi -af
-   20  podman ps
-   21  podman images
-   22  vim Containerfile
-   23  podman images
-   24  podman build --layer=false -t my-image-name .
-   25  podman build --help | grep layer
-   26  podman build --layers=false -t my-image-name .
-   27  podman images
-   28  podman tag localhost/my-image-name quay.io/cprakash2118/ocp-9-nov24-image:testv1
-   29  podman images
-   30  podman quay.io
-   31  podman login quay.io
-   32  podman  push quay.io/cprakash2118/ocp-9-nov24-image:testv1
-   33  oc new-project demo01 
-   34  oc project -q 
-   35  oc get all
-   36  oc new-app --name test01 quay.io/cprakash2118/ocp-9-nov24-image:testv1
-   37  oc get pods
-   38  watch oc get pods
-   39  oc get pods
-   40  oc logs test01-6745b55df8-mvz78
-   41  oc create serviceaccount app-sa 
-   42  oc adm policy add-scc-to-user anyuid -z app-sa 
-   43  oc  get pods
-   44  oc set serviceaccount deployment test01 app-sa 
-   45  oc  get pods
-   46  oc get pods 
-   47  oc get svc 
-   48  oc get deployment 
-   49  oc expose service test01 
-   50  oc get route 
-   51  curl http://test01-demo01.apps.ocp4.example.com
-   52  oc new-project demo02 
-   53  oc new-app --as-deployment-config httpd:2.4~https://github.com/cprakash2118/web
-   54  oc get pods
-   55  oc logs -f bc/web
-   56  oc get pods
-   57  oc expose service web 
-   58  oc get pods 
-   59  oc scale --replicas=10 dc/web 
-   60  oc get pods 
-   61  oc get pods
-   62  oc get pods | grep build 
-   63  oc start-build web 
-   64  oc get pods | grep build 
-   65  oc logs -f bc/web
-   66  oc get pods | grep build 
-   67  oc start-build --help |less
-   68  oc start-build --from-build=web-2 
-   69  oc logs -f bc/web
-   70  oc start-build --from-build=web-1
-   71  oc logs -f bc/web
-   72  oc get pods | grep build 
-   73  oc get pods | grep dep
-   74  oc get bc
-   75  ll
-   76  git clone https://github.com/cprakash2118/ocp-9-nov24
-   77  cp -rpv Containerfile ocp-9-nov24/
-   78  history  > ocp-9-nov24/history.txt 
+    2  uptime
+    3  uptime 
+    4  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+    5  uptime 
+    6  ssh root@utility 
+    7  ll
+    8  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+    9  uptime 
+   10  oc get pods -n openshift-
+   11  oc get pods -n openshift-authenticationn
+   12  oc get pods -n openshift-authentication
+   13  oc get pods -n openshift-apiserver
+   14  oc get pods -n openshift-kube-apiserver
+   15  oc get pods -n openshift-etcd
+   16  oc get pods -n openshift-controller
+   17  oc get pods -n openshift-controller-manager
+   18  oc get pods -n openshift-kube-scheduler
+   19  oc get pods -n openshift-kube-scheduler --kubeconfig kubeconfig
+   20  uptime
+   21  oc new-app --name myapp quay.io/cprakash2118/april-java-unzip-httpd-image-02
+   22  oc get pods 
+   23  watch oc get pods 
+   24  oc get pods
+   25  oc logs  myapp-55d7978b89-95g2g
+   26  oc get pods
+   27  oc describe deployment myapp |less
+   28  oc get pods
+   29  oc scale --replicas=3 deployment myapp 
+   30  oc get pods 
+   31  oc get pods -o wide 
+   32  oc get deployment myapp -o yaml |less
+   33  oc get pods -o wide 
+   34  oc get svc 
+   35  oc project -q
+   36  oc new-project demo01 
+   37  oc project -q 
+   38  oc whoami 
+   39  oc new-app --name myapp quay.io/cprakash2118/april-java-unzip-httpd-image-02
+   40  oc get pods 
+   41  oc get all -l app=myapp -n default 
+   42  oc delete all -l app=myapp -n default 
+   43  oc get pods 
+   44  oc create serviceaccount app-sa 
+   45  oc adm policy add-scc-to-user anyuid -z app-sa 
+   46  oc get pods
+   47  oc logs myapp-55d7978b89-jm8bs
+   48  oc set serviceaccount deployment myapp app-sa 
+   49  oc get pods
+   50  oc scale --replicas=3 deployment myapp 
+   51  oc get pods
+   52  oc get pods -o wide 
+   53  oc new-app --name myapp2 quay.io/cprakash2118/april-java-unzip-httpd-image-02
+   54  oc get pods 
+   55   oc get deploy/myapp2 -o yaml 
+   56   oc get deploy/myapp2 -o yaml |  oc adm policy  scc-subject-review -f -
+   57  oc get pods
+   58  oc logs myapp2-f6dcb8785-79mrh
+   59  cat /run/sshd.pid 
+   60  systemctl status sshd
+   61  oc logs myapp2-f6dcb8785-79mrh
+   62  oc set sa deployment myapp2 app-sa 
+   63  oc get pods
+   64  oc rsh myapp2-b75b9b449-wx6z9
+   65  oc get deployment myapp2 -o yaml | grep -i service 
+   66  oc get pods 
+   67  oc delete all -l app=myapp2 
+   68  oc get pods 
+   69  oc get pods -o wide 
+   70  oc describe svc 
+   71  oc rsh myapp-5cd5dbc649-bhpgf
+   72  oc rsh myapp-5cd5dbc649-qmz6t
+   73  oc get pods -o wide 
+   74  oc rsh myapp-5cd5dbc649-rfw9w
+   75  oc get pods 
+   76  oc get pods -o wide 
+   77  oc get svc 
+   78  oc get route 
+   79  #oc expose service myapp --hostname gmail.apps.ocp4.example.com 
+   80  oc expose service myapp --hostname cat.apps.ocp4.example.com 
+   81  oc get route 
+   82  curl http://cat.apps.ocp4.example.com
+   83  oc get pods
+   84  oc get svc 
+   85  oc get route 
+   86  oc get pods -o wide 
+   87  oc get svc 
+   88  oc get route 
+   89  curl http://172.30.57.77:80
+   90  curl http://10.8.0.85:80
+   91  curl http://10.8.0.84:80
+   92  curl http://10.8.0.83:80
+   93  oc rsh myapp-5cd5dbc649-bhpgf
+   94  uptime 
+   95  oc whoami 
+   96  whoami
+   97  oc whoami
+   98  lab start auth-providers
+   99  htpasswd -c -B -b ~/DO280/labs/auth-providers/htpasswd new_admin redhat
+  100  htpasswd -b -B ~/DO280/labs/auth-providers/htpasswd new-developer developer
+  101  cat ~/DO280/labs/auth-providers/htpasswd 
+  102  oc login -u admin -p redhatocp https://api.ocp4.example.om:6443
+  103  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+  104  oc create secret generic localusers --from-file htpasswd=~/DO280/labs/auth-providers/htpasswd -n openshift-config
+  105  oc adm policy add-cluster-role-to-user cluster-admin new_admin
+  106  oc get oauth cluster -o yaml > ~/DO280/labs/auth-providers/oauth.yaml 
+  107  vim ~/DO280/labs/auth-providers/oauth.yaml 
+  108  oc replace -f ~/DO280/labs/auth-providers/oauth.yaml 
+  109  watch oc get all -n openshift-authentication
+  110  oc login -u new_admin -p redhat
+  111  oc login -u new-developer -p developer
+  112  oc get nodes
+  113  oc login -u new_admin -p redhat
+  114  oc get nodes
+  115  oc get users
+  116  oc get identity
+  117  oc extract secret/localusers -n openshift-config --to ~/DO280/labs/auth-providers/ --confirm
+  118  htpasswd -b ~/DO280/labs/auth-providers/htpasswd manager redhat
+  119  cat ~/DO280/labs/auth-providers/htpasswd 
+  120  oc set data secret/localusers --from-file htpasswd=~/DO280/labs/auth-providers/htpasswd -n openshift-config
+  121  watch oc get all -n openshift-authentication
+  122  oc login -u manager -p redhat
+  123  oc new-project auth-providers
+  124  oc login -u new-developer -p developer
+  125  oc delete project auth-providers
+  126  oc login -u new_admin -p redhat
+  127  oc extract secret/localusers -n openshift-config --to ~/DO280/labs/auth-providers/ --confirm
+  128  MANAGER_PASSWD="$(openssl rand -hex 15)"
+  129  htpasswd -b ~/DO280/labs/auth-providers/htpasswd manager ${MANAGER_PASSWD}
+  130  oc set data secret/localusers --from-file htpasswd=~/DO280/labs/auth-providers/htpasswd -n openshift-config
+  131  watch oc get all -n openshift-authentication
+  132  oc login -u manager -p ${MANAGER_PASSWD}
+  133  oc login -u new_admin redhat
+  134  oc login -u new_admin -p redhat
+  135  oc extract secret/localusers -n openshift-config --to ~/DO280/labs/auth-providers/ --confirm
+  136  htpasswd -D ~/DO280/labs/auth-providers/htpasswd manager
+  137  oc set data secret/localusers --from-file htpasswd=~/DO280/labs/auth-providers/htpasswd -n openshift-config
+  138  watch oc get all -n openshift-authentication
+  139  oc login -u manager -p ${MANAGER_PASSWD}
+  140  oc login -u new_admin -p redhat
+  141  oc delete identity "myusers:manager"
+  142  oc delete user manager
+  143  oc get users
+  144  oc get identity
+  145  oc extract secret/localusers -n openshift-config --to -
+  146  oc login -u admin -p redhatocp
+  147  oc delete project auth-providers
+  148  oc edit oauth
+  149  watch oc get all -n openshift-authentication
+  150  oc delete secret localusers -n openshift-config
+  151  oc delete identity --all
+  152  oc delete user --all
+  153  lab finish auth-providers
+  154  lab start auth-rbac
+  155  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+  156  oc get clusterrolebinding -o wide | grep -E 'ROLE|seld-provisioner'
+  157  oc get clusterrolebinding -o wide | grep -E 'ROLE|self-provisioner'
+  158  oc describe clusterrolebinding delf-provisioners
+  159  oc describe clusterrolebinding self-provisioners
+  160  oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
+  161  oc describe clusterrolebinding -o wide | grep -E 'ROLE|self-provisioner'
+  162  oc get clusterrolebinding -o wide | grep -E 'ROLE|self-provisioner'
+  163  oc login -u leader -p redhat
+  164  oc new-project test
+  165  oc oc login -u admin -p redhatocp
+  166  oc login -u admin -p redhatocp
+  167  oc new-project auth-rbac
+  168  oc policy add-role-to-user admin leader
+  169  oc adm groups new dev-group
+  170  oc adm groups add-users dev-group developer
+  171  oc adm group new qa-group
+  172  oc adm groups new qa-group
+  173  oc adm group add-users qa-group qa-engineer
+  174  oc adm groups add-users qa-group qa-engineer
+  175  oc get groups
+  176  oc login -u leader -p redhat
+  177  oc policy add-role-to-group edit dev-group
+  178  oc adm policy add-role-to-group view qa-group
+  179  oc get rolebindings -o wide | grep -v '^system:'
+  180  oc login -u developer -p developer
+  181  oc new-app --name httpd httpd:2.4
+  182  oc policy add-role-to-user edit qa-engineer
+  183  oc login -u qa-engineer -p redhat
+  184  oc scale deployment httpd --replias 3
+  185  oc scale deployment httpd --replicas 3
+  186  oc login -u admin -p redhatocp
+  187  oc adm policy add-cluster-role-to-group --rolebinding-name self-provisioners self-provisioner system:autheticated:oauth
+  188  lab finish auth-rbac
+  189  lab start network-ingress
+  190  oc login -u developer -p developer https://api.ocp4.example.com:6443
+  191  oc new-project network-ingress
+  192  oc create -f ~/DO280/labs/network-ingress/todo-app-v1.yaml 
+  193  oc new-project network-ingress
+  194  oc login -u developer -p developer https://api.ocp4.example.com:6443
+  195  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+  196  oc new-project network-ingress
+  197  oc login -u developer -p developer https://api.ocp4.example.com:6443
+  198  oc new-project network-ingress
+  199  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+  200  oc project network-ingress
+  201  oc create -f ~/DO280/labs/network-ingress/todo-app-v1.yaml 
+  202  oc status
+  203  oc expose svc todo-http --hostname todo-http.apps.ocp4.example.com
+  204  oc get route
+  205  ip addr | grep 172.25.250.9
+  206  sudo tcpdump -i eth0 -A -n port 80 | grep "angular"
+  207  oc get routes
+  208  ip addr | grep 172.25.250.9
+  209  cd ~/DO280/labs/network-ingress/
+  210  oc create route edge todo-https --service todo-http --hostname todo-http.apps.ocp4.example.com
+  211  oc create route edge todo-https --service todo-http --hostname todo-https.apps.ocp4.example.com
+  212  curl -I -v https://todo-https.apps.ocp4.example.com
+  213  oc get svc todo-http -o jsonpath="{spec.clisterIP}{'\n'}
+  214  oc get svc todo-http -o jsonpath="{spec.clusterIP}{'\n'}"
+  215  oc get svc todo-http -o jsonpath="{.spec.clusterIP}{'\n'}"
+  216  oc debug -t deployment/todo-http --image registry.ocp4.example.com:8443/ubi8/ubi:8.4
+  217  oc delete route todo-https
+  218  cd certs
+  219  ls -l
+  220  openssl genrsa -out training.key 4096
+  221  openssl req -new -key training.key -out training.csr -subj "/C=US/ST=NORTH carolina/L Raleigh/O=Red Hat/CN=todo-https.apps.ocp4.example.com"
+  222  openssl req -new -key training.key -out training.csr -subj "/C=US/ST=NORTH carolina/L=Raleigh/O=Red Hat/CN=todo-https.apps.ocp4.example.com"
+  223  openssl x509 -req -in training.csr -passin file:passphrase.txt -CAtraining-CA.pem -CAkey training-CA.key -CAcreateserial -out training.cet -days 1825 -sha256 -extfile training.ext
+  224  openssl x509 -req -in training.csr -passin file:passphrase.txt -CA training-CA.pem -CAkey training-CA.key -CAcreateserial -out training.crt -days 1825 -sha256 -extfile training.ext
+  225  ls -lrt
+  226  cd ~/DO280/labs/network-ingress/
+  227  oc create secret tls todo-certs --cert certs/training.crt --key certs/training.key
+  228  cat todo-app-v2.yaml 
+  229  oc create -f todo-app-v2.yaml 
+  230  oc set volumes deployment/todo-https
+  231  oc create route passthrough todo-https --service todo-https --port 8443 --hostname todo-https.apps.ocp4.example.com
+  232  curl -vv -I --cacert certs/training-CA.pem https://todo-https.apps.ocp4.example.com
+  233  oc get svc todo-https -o jsonpath="{.spec.clusterIP}{\n}"
+  234  oc get svc todo-https -o jsonpath="{.spec.clusterIP}{'\n'}"
+  235  oc debug -t deployment/todo-htpps --image registry.ocp4.example.com:8443/ubi8/ubi:8.4
+  236  oc debug -t deployment/todo-https --image registry.ocp4.example.com:8443/ubi8/ubi:8.4
+  237  cd
+  238  oc delete project network-ingress
+  239  lab finish network-ingress
+  240  lab start network-policy 
+  241  oc login -u developer -p developer https://api.ocp4.example.com:6443
+  242  oc new-project network-policy
+  243  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+  244  oc adm policy add-cluster-role-to-user self-provisioner developer 
+  245  oc login -u developer -p developer https://api.ocp4.example.com:6443
+  246  oc new-project network-policy
+  247  oc new-app -name test -image registry.ocp4.example.com:8443/redhattraining/hello-world-nginx:v1.0
+  248  oc new-app -name test -image quay.io/redhattraining/hello-world-nginx
+  249  oc new-app -name test --image quay.io/redhattraining/hello-world-nginx
+  250  oc new-app --name test --image quay.io/redhattraining/hello-world-nginx
+  251  oc new-app --name hello --image quay.io/redhattraining/hello-world-nginx
+  252  oc expose service hello
+  253  oc new-project different-namespace
+  254  oc new-app --name sample --image quay.io/redhattraining/hello-world-nginx
+  255  cd ~/DO280/labs/network-policy
+  256  vim display-project-info.sh 
+  257  ./display-project-info.sh 
+  258  oc rsh hello-54bcdddd98-ndtfb
+  259  oc project network-policy 
+  260  oc rsh hello-54bcdddd98-ndtfb
+  261  ./display-project-info.sh 
+  262  oc rsh test-6dff69d668-9ndbq
+  263  vim ~/DO280/labs/network-policy/
+  264  vim ~/DO280/labs/network-policy
+  265  vim deny-all.yaml 
+  266  oc apply -f deny-all.yaml 
+  267  ./display-project-info.sh 
+  268  oc rsh hello-54bcdddd98-ndtfb
+  269  oc rsh test-6dff69d668-9ndbq
+  270  oc project different-namespace 
+  271  ./display-project-info.sh 
+  272  oc rsh test-6dff69d668-9ndbq
+  273  oc rsh sample-86cfbfc84-jvmdw
+  274  oc project network-policy 
+  275  vim ~/DO280/labs/network-policy/allow-specific.yaml 
+  276  oc create -n network-policy -f allow-specific.yaml 
+  277  oc get networkpolicies -n network-policy
+  278  oc login -u admin -p redhatocp
+  279  oc label namespace different-namespace network=different-namespace
+  280  oc describe namespace different-namespace 
+  281  oc login -u developer -p developer
+  282  oc project different-namespace 
+  283  ./display-project-info.sh 
+  284  oc rsh sample-86cfbfc84-jvmdw 
+  285  oc project -q
+  286  oc rsh sample-86cfbfc84-jvmdw 
+  287  vim ~/DO280/labs/network-policy/allow-from-openshift-ingress.yaml 
+  288  oc create -n network-policy -f allow-from-openshift-ingress.yaml 
+  289  vim ~/DO280/labs/network-policy/allow-from-openshift-ingress.yaml 
+  290  oc create -n network-policy -f allow-from-openshift-ingress.yaml 
+  291  oc get networkpolicies -n network-policy
+  292  vim ~/DO280/labs/network-policy/allow-from-openshift-ingress.yaml 
+  293  oc create -n network-policy -f allow-from-openshift-ingress.yaml 
+  294  oc get networkpolicies -n network-policy
+  295  oc login -u admin -p redhatocp
+  296  oc label namespaces default network.openshift.io/policy-group-ingress
+  297  curl -s hello-network-policy.apps.ocp4.example.com | grep Hello
+  298  cd
+  299  lab finish network-policy 
+  300  lab start network-svccerts
+  301  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+  302  oc project network-svccerts
+  303  oc annotate service server service.beta.openshift.io/serving-cert-secret-name=server-secret
+  304  oc describe service server
+  305  oc describe sercret server-secret
+  306  oc describe secret server-secret
+  307  vim ~/DO280/labs/network-svccerts/server-secret.yaml 
+  308  oc patch deployment server --patch-file ~/DO280/labs/network-svccerts/server-secret.yaml 
+  309  oc exec no-ca-bundle -- openssl s_client -connect sever.network-svccerts.svc:443
+  310  oc exec no-ca-bundle -- openssl s_client -connect server.network-svccerts.svc:443
+  311  vim ~/DO280/labs/network-svccerts/server-secret.yaml 
+  312  oc patch deployment server --patch-file ~/DO280/labs/network-svccerts/server-secret.yaml 
+  313  oc exec no-ca-bundle -- openssl s_client -connect server.network-svccerts.svc:443
+  314  oc create configmap ca-bundle
+  315  oc annotate configmap ca-bundle service.beta.openshift.io/inject-cabundle=true
+  316  oc get configmap ca-bundle -o yaml
+  317  vim ~/DO280/labs/network-svccerts/client.yaml 
+  318  oc apply -f ~/DO280/labs/network-svccerts/client.yaml 
+  319  oc exec deploy/client -- openssl s_client -connect server.network-svccerts.svc:443
+  320  lab finish network-svccerts 
+  321  lab start network-svccerts 
+  322  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+  323  oc project -q
+  324  oc annotate service server service.beta.openshift.io/serving-cert-secret-name=server-secret
+  325  oc describe server-secret
+  326  oc describe service server
+  327  oc describe secret server-secret
+  328  vim ~/DO280/labs/network-svccerts/server-secret.yaml 
+  329  oc patch deployment server --patch-file ~/DO280/labs/network-svccerts/server-secret.yaml 
+  330  oc exec no-ca-bundle -- openssl s_client -connect server.network-svccerts.svc:443
+  331  oc creat configmap ca-bundle
+  332  oc create configmap ca-bundle
+  333  oc annotate configmap ca-bundle service.beta.openshift.io/inject-cabundle=true
+  334  oc get configmap ca-bundle -o yaml
+  335  vim ~/DO280/labs/network-svccerts/client.yaml 
+  336  oc apply -f ~/DO280/labs/network-svccerts/client.yaml 
+  337  oc exec deploy/client -- curl -s https://server.network-svccerts.svc
+  338  oc exec deploy/client -- openssl s_client -connect server.network-svccerts.svc:443
+  339  lab finish network-svccerts
+  340  lab start non-http-lb
+  341  oc login -u developer -p developer https://api.ocp4.example.com:6443
+  342  oc new-project non-http-lb
+  343  cd ~/DO280/labs/non-http-lb/
+  344  ls -l
+  345  oc apply -f virtual-rtsp-1.yaml 
+  346  watch oc get deployments,pods
+  347  oc expose deployment/virtual-rtsp-1 --type=LoadBalancer --target-port=8554
+  348  oc get services
+  349  nc -vz 192.168.50.20 8554
+  350  totem rtsp://192.168.50.20:8554/stream
+  351  oc apply -f virtual-rtsp-2.yaml 
+  352  watch oc get deployments,pods
+  353  oc apply -f virtual-rtsp-3.yaml 
+  354  watch oc get deployments,pods
+  355  oc expose deployment/virtual-rtsp-2 --type=LoadBalance --target-port=8554
+  356  oc expose deployment/virtual-rtsp-2 --type=LoadBalancer --target-port=8554
+  357  oc expose deployment/virtual-rtsp-3 --type=LoadBalancer --target-port=8554
+  358  oc get service
+  359  totem rtsp://192.168.50.21:8554/stream
+  360  oc delete service/virtual-rtsp-1
+  361  oc get services
+  362  totem rtsp://192.168.50.20:8554/stream
+  363  cd
+  364  oc delete services --all
+  365  oc delete deployments --all
+  366  oc delete project/non-http-lb
+  367  lab finish non-http-lb
+  368  lab start network-ingress
+  369  oc login -u developer -p developer https://api.ocp4.example.com:6443
+  370  oc new-project network-ingress
+  371  cd certs
+  372  cd ~/DO280/labs/network-ingress/certs/
+  373  ls -l
+  374  oc create -f ~/DO280/labs/network-ingress/todo-app-v2.yaml 
+  375  oc status
+  376  ls -l
+  377  openssl genrsa -out training.key 4096
+  378  openssl req -new -key training.key -out training.csr -subj "/C=US/ST=North Carolina/L=Raleigh/O=Red Hat/ CN=todo-https.apps.ocp4.example.com"
+  379  openssl req -new -key training.key -out training.csr -subj "/C=US/ST=North Carolina/L=Raleigh/O=Red Hat/CN=todo-https.apps.ocp4.example.com"
+  380  openssl x509 -req -in training.csr -passin file:passphrase.txt -CA training-CA.pem -CAkey training-CA.key -CAcreateserial -out training.crt -days 1825 -sha256 -extfile training.ext
+  381  ls -lrt
+  382  cd ~/DO280/labs/network-ingress
+  383  oc create secret tls todo-certs --cert certs/training.crt --key certs/training.key 
+  384  vim todo-app-v2.yaml 
+  385  cd todo-app-v2.yaml 
+  386  cat todo-app-v2.yaml 
+  387  oc create -f todo-app-v2.yaml 
+  388  oc set volumes deployment/todo-https
+  389  oc create route passthrough todo-https --service todo-https --port 8443 --hostname todo-https.apps.ocp4.example.com
+  390  curl -vv -I -cacert certs/training-CA.pem https://todo-https.apps.ocp4.example.com
+  391  curl -vv -I --cacert certs/training-CA.pem https://todo-https.apps.ocp4.example.com
+  392  oc get svc todo-https -o jsonpath="{.spec.clusterIP}{'\n'}"
+  393  oc debug -t deployment/todo-https --image registry.ocp4.example.com:8443/ubi8/ubi:8.4
+  394  cd
+  395  oc delete project network-ingress 
+  396  lab finish network-ingress 
+  397  lab start non-http-multus
+  398  echo I will check your work 
+  399  echo okay sir
+  400  echo You can continue 
+  401  echo yes sir i'm just seeing thingd
+  402  echo "yes sir i'm just seeing thingd"
+  403  echo ok
+  404  echo if anything ping me 
+  405  echo pakka sir
+  406  echo ok
+  407  oc login -u developer -p developer https://api.ocp4.example.com:6443
+  408  oc new-project non-http-multus
+  409  oc apply -f ~/DO280/labs/non-http-multus/deployment.yaml 
+  410  oc get all
+  411  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+  412  oc get node
+  413  oc debug node/master01 -- chroot /host ip addr
+  414  ip addr
+  415  ip route
+  416  ping 192.168.51.10
+  417  ssh utility
+  418  vim ~/DO280/labs/non-http-multus/network-attachment-definition.yaml 
+  419  diff ~/DO280/labs/non-http-multus/network-attachment-definition.yaml ~/DO280/solutions/non-http-multus/network-attachment-definition.yaml 
+  420  oc create -f ~/DO280/labs/non-http-multus/network-attachment-definition.yaml 
+  421  vim ~/DO280/labs/non-http-multus/network-attachment-definition.yaml 
+  422  diff ~/DO280/labs/non-http-multus/network-attachment-definition.yaml ~/DO280/solutions/non-http-multus/network-attachment-definition.yaml 
+  423  oc create -f ~/DO280/labs/non-http-multus/network-attachment-definition.yaml 
+  424  oc login -u developer -p developer https://api.ocp4.example.com:6443
+  425  vim ~/DO280/labs/non-http-multus/deployment.yaml 
+  426  oc apply -f ~/DO280/labs/non-http-multus/deployment.yaml 
+  427  oc get all
+  428  oc get pod database-79c4689c6b-6schp -o jsonpath='{.metadata.annotations.k8s\.v1\.cni\.cncf\.io/network-status}'
+  429  oc get pod database-79c4689c6b -o jsonpath='{.metadata.annotations.k8s\.v1\.cni\.cncf\.io/network-status}'
+  430  oc get pod database-79c4689c6b-9jbrn -o jsonpath='{.metadata.annotations.k8s\.v1\.cni\.cncf\.io/network-status}'
+  431  ssh utility
+  432  psql -h 192.168.51.10 -U user sample -c 'SELECT 1;'
+  433  ssh utility
+  434  oc get pods
+  435  oc get pod database-79c4689c6b-9jbrn -o jsonpath='{.metadata.annotations.k8s\.v1\.cni\.cncf\.io/network-status}'
+  436  psql -h 192.168.51.10 -U user sample -c 'SELECT 1;'
+  437  lab finish non-http-multus 
+  438  echo you are workhollic 
+  439  echo :)
+  440  oc whoami 
+  441  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+  442  cd DO280/
+  443  ll
+  444  cd labs/
+  445  ll
+  446  cd network-policy/
+  447  pwd
+  448  ll
+  449  oc projects | grep policy 
+  450  oc projects | grep -i policy 
+  451  oc projects | grep -i diff
+  452  cd
+  453  lab start network-policy
+  454  cd -
+  455  ll
+  456  oc new-project network-policy
+  457  oc project -q
+  458   oc get pods
+  459  oc new-app --name hello  --image registry.ocp4.example.com:8443/redhattraining/hello-world-nginx:v1.0
+  460  oc get pods
+  461  oc new-app --name test  --image registry.ocp4.example.com:8443/redhattraining/hello-world-nginx:v1.0
+  462  oc get pods
+  463  oc get svc 
+  464  oc project -q
+  465  oc expose service hello 
+  466  oc get route 
+  467  ll
+  468  ./display-project-info.sh 
+  469  oc new-project  different-namespace
+  470  oc new-app --name sample  --image registry.ocp4.example.com:8443/redhattraining/hello-world-nginx:v1.0
+  471  ./display-project-info.sh 
+  472  vim display-project-info.sh 
+  473  ./display-project-info.sh 
+  474  oc project -q
+  475  oc rsh sample-5c4c7bf8ff-j95z6 
+  476  ./display-project-info.sh 
+  477  oc rsh sample-5c4c7bf8ff-j95z6 
+  478  ./display-project-info.sh 
+  479  oc project network-policy 
+  480  oc rsh test-54d78b7-b2vjl 
+  481  ll
+  482  vim deny-all.yaml 
+  483  vim -O deny-all.yaml ../../solutions/network-policy/deny-all.yaml 
+  484  oc project -q
+  485  oc get networkpolicy 
+  486  oc create -f deny-all.yaml --save-config 
+  487  oc get networkpolicy 
+  488  ll
+  489  ./display-project-info.sh 
+  490  oc project -q 
+  491  oc rsh test-54d78b7-b2vjl 
+  492  oc project -q
+  493  oc project different-namespace 
+  494  oc project -q
+  495  oc get pods 
+  496  ./display-project-info.sh 
+  497  oc rsh sample-5c4c7bf8ff-j95z6 
+  498  oc get nodes
+  499  ll
+  500  vim allow-specific.yaml 
+  501  vim -O allow-specific.yaml ../../solutions/network-policy/allow-specific.yaml 
+  502  :wq
+  503  oc get nodes --show-labels 
+  504  oc label nodes master01 env=prod 
+  505  oc get nodes --show-labels | grep prod 
+  506  vim -O allow-specific.yaml ../../solutions/network-policy/allow-specific.yaml 
+  507  vim -o allow-specific.yaml ../../solutions/network-policy/allow-specific.yaml 
+  508  vim -O allow-specific.yaml ../../solutions/network-policy/allow-specific.yaml 
+  509  ll
+  510  vim -O allow-specific.yaml ../../solutions/network-policy/allow-specific.yaml 
+  511  oc get nodes --show-labels | grep prod 
+  512  oc get namespaces --show-labels 
+  513  oc get namespaces different-namespace --show-labels 
+  514  oc get networkpolicy 
+  515  oc project -q 
+  516  oc project network-policy 
+  517  oc project -q 
+  518  oc get networkpolicy 
+  519  oc create -f allow-specific.yaml --save-config 
+  520  oc get networkpolicy 
+  521  oc project -q
+  522  oc project different-namespace 
+  523  oc project -q
+  524  ./display-project-info.sh 
+  525  oc get networkpolicy -n network-policy 
+  526  oc rsh sample-5c4c7bf8ff-j95z6 
+  527  oc project -q 
+  528  oc get networkpolicy 
+  529  oc project network-policy 
+  530  oc get networkpolicy 
+  531  #oc label namespaces different-namespace network=different-namespace
+  532  ll
+  533  vim allow-specific.yaml 
+  534  oc label namespaces different-namespace network=different-namespace
+  535  oc get namespaces different-namespace --show-labels 
+  536  oc get namespaces different-namespace --show-labels  | grep diff
+  537  oc project -q
+  538  oc project different-namespace 
+  539  oc get pods
+  540  ./display-project-info.sh 
+  541  oc rsh sample-5c4c7bf8ff-j95z6 
+  542  oc project -q
+  543  oc get namespaces different-namespace --show-labels 
+  544  vim allow-specific.yaml 
+  545  oc apply -f allow-specific.yaml 
+  546  oc get pods
+  547  oc get networkpolict 
+  548  oc get networkpolicy
+  549  oc delete networkpolicy 
+  550  oc delete networkpolicy allow-specific 
+  551  oc project -q
+  552  oc project network-policy 
+  553  oc apply -f allow-specific.yaml 
+  554  oc get networkpolicies.networking.k8s.io 
+  555  oc edit networkpolicies.networking.k8s.io allow-specific 
+  556  oc project different-namespace 
+  557  ./display-project-info.sh 
+  558  oc rsh sample-5c4c7bf8ff-j95z6 
+  559  ll
+  560  cp -rpv allow-specific.yaml allow-specific-from-test_to_hello.yaml 
+  561  vim allow-specific-from-test_to_hello.yaml 
+  562  oc create -f allow-specific-from-test_to_hello.yaml --save-config 
+  563  oc get networkpolicy 
+  564  oc delete networkpolicies.networking.k8s.io allow-specific-test-to-hello 
+  565  oc project network-policy 
+  566  oc get pods
+  567  oc create -f allow-specific-from-test_to_hello.yaml --save-config 
+  568  oc get networkpolicy 
+  569  oc project different-namespace 
+  570  ll
+  571  ./display-project-info.sh 
+  572  oc rsh sample-5c4c7bf8ff-j95z6 
+  573  oc project -q 
+  574  oc project network-policy 
+  575  oc get pods 
+  576  oc get networkpolicy
+  577  ./display-project-info.sh 
+  578  oc rsh test-54d78b7-b2vjl 
+  579  ll
+  580  oc get networkpolicy 
+  581  oc delete networkpolicies.networking.k8s.io allow-specific-test-to-hello 
+  582  mv allow-specific-from-test_to_hello.yaml allow-specific-from-sample_to_hello.yaml
+  583  vim allow-specific-from-sample_to_hello.yaml
+  584  oc create -f allow-specific-from-sample_to_hello.yaml --save-config 
+  585  cp -rpv allow-specific-from-sample_to_hello.yaml allow-specific-from-test_to_hello.yaml
+  586  vim allow-specific-from-test_to_hello.yaml 
+  587  ./display-project-info.sh 
+  588  oc project -q
+  589  oc rsh test-54d78b7-b2vjl 
+  590  ll
+  591  oc create  -f allow-specific-from-test_to_hello.yaml --save-config 
+  592  ./display-project-info.sh 
+  593  oc rsh test-54d78b7-b2vjl 
+  594  ll
+  595  oc get networkpolicy 
+  596  vim allow-specific-from-test_to_hello.yaml
+  597  oc label namespaces network-policy network=network-policy
+  598  oc rsh test-54d78b7-b2vjl 
+  599  ./display-project-info.sh 
+  600  oc rsh test-54d78b7-b2vjl 
+  601  ll
+  602  cat allow-specific-from-test_to_hello.yaml 
+  603  #oc label namespaces network-policy network=network-policy
+  604  ll
+  605  cat allow-specific-from-test_to_hello.yaml
+  606  vim -O allow-specific-from-test_to_hello.yaml allow-specific-from-sample_to_hello.yaml
+  607  ll
+  608  mkdir work 
+  609  cp -rpv allow-* deny-all.yaml work/
+  610  cd  work/
+  611  pwd
+  612  ll
+  613  history > history.txt 
